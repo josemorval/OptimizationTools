@@ -15,7 +15,7 @@ public class Testing : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		MVector.Init ();			
+		MVector.Init (10);			
 	}
 	
 	// Update is called once per frame
@@ -25,12 +25,12 @@ public class Testing : MonoBehaviour
 
 			Stopwatch sw = new Stopwatch ();
 			sw.Start ();
-			Vector3 v1;
+			VectorContainer<Vector3> v1;
 
 			MVector.Get (out v1, 1f, 2f, 3f);
 
 			for (int i = 0; i < 100000; i++) {
-				MVector.AddTo (ref v1, ref v1);
+				MVector.AddTo (ref v1.Vector, ref v1.Vector);
 			}
 
 			MVector.Release (v1);

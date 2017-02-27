@@ -1,28 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+
+public class VectorContainer<T> {
+   public T Vector;
+
+   public VectorContainer() {
+      Vector = default(T);
+   }
+}
 
 public static class MVector
 {
 
 	#region Inicializacion del pool de vectores
 
-	public static void Init ()
+	public static void Init (int poolSize)
 	{
+      _poolSize = poolSize;
 
-		_v2referenced = new List<Vector2> ();
-		_v2noreferenced = new List<Vector2> ();
+		_v2referenced = new List<VectorContainer<Vector2>> (poolSize);
+		_v2noreferenced = new List<VectorContainer<Vector2>> (poolSize);
 
-		_v3referenced = new List<Vector3> ();
-		_v3noreferenced = new List<Vector3> ();
+		_v3referenced = new List<VectorContainer<Vector3>> (poolSize);
+		_v3noreferenced = new List<VectorContainer<Vector3>> (poolSize);
 
-		_v4referenced = new List<Vector4> ();
-		_v4noreferenced = new List<Vector4> ();
+		_v4referenced = new List<VectorContainer<Vector4>> (poolSize);
+		_v4noreferenced = new List<VectorContainer<Vector4>> (poolSize);
 
 		for (int i = 0; i < _poolSize; i++) {
-			_v2noreferenced.Add (Vector2.zero);
-			_v3noreferenced.Add (Vector3.zero);
-			_v4noreferenced.Add (Vector4.zero);
+			_v2noreferenced.Add (new VectorContainer<Vector2>());
+			_v3noreferenced.Add (new VectorContainer<Vector3>());
+			_v4noreferenced.Add (new VectorContainer<Vector4>());
 		}
 			
 	}
@@ -34,14 +42,14 @@ public static class MVector
 	//TODO
 	//Que pasa cuando nos quedamos sin referencias en el pool
 
-	public static void Get (out Vector2 v)
+	public static void Get (out VectorContainer<Vector2> v)
 	{
 		v = _v2noreferenced [0];
 		_v2referenced.Add (v);
 		_v2noreferenced.RemoveAt (0);
 	}
 
-	public static void Get (out Vector3 v)
+	public static void Get (out VectorContainer<Vector3> v)
 	{		
 		v = _v3noreferenced [0];
 		_v3referenced.Add (v);
@@ -49,7 +57,7 @@ public static class MVector
 	}
 
 
-	public static void Get (out Vector4 v)
+	public static void Get (out VectorContainer<Vector4> v)
 	{
 		v = _v4noreferenced [0];
 		_v4referenced.Add (v);
@@ -57,34 +65,34 @@ public static class MVector
 	}
 
 
-	public static void Get (out Vector2 v, float x, float y)
+	public static void Get (out VectorContainer<Vector2> v, float x, float y)
 	{
 		v = _v2noreferenced [0];
-		v.x = x;
-		v.y = y;
+		v.Vector.x = x;
+		v.Vector.y = y;
 		_v2referenced.Add (v);
 		_v2noreferenced.RemoveAt (0);
 	}
 
 
-	public static void Get (out Vector3 v, float x, float y, float z)
+	public static void Get (out VectorContainer<Vector3> v, float x, float y, float z)
 	{
 		v = _v3noreferenced [0];
-		v.x = x;
-		v.y = y;
-		v.z = z;
+		v.Vector.x = x;
+		v.Vector.y = y;
+		v.Vector.z = z;
 		_v3referenced.Add (v);
 		_v3noreferenced.RemoveAt (0);
 	}
 
 
-	public static void Get (out Vector4 v, float x, float y, float z, float w)
+	public static void Get (out VectorContainer<Vector4> v, float x, float y, float z, float w)
 	{		
 		v = _v4noreferenced [0];
-		v.x = x;
-		v.y = y;
-		v.z = z;
-		v.w = w;
+		v.Vector.x = x;
+		v.Vector.y = y;
+		v.Vector.z = z;
+		v.Vector.w = w;
 		_v4referenced.Add (v);
 		_v4noreferenced.RemoveAt (0);
 	}
@@ -93,9 +101,9 @@ public static class MVector
 
 	#region Region de liberacion de referencias
 
-	public static void Release (Vector2 v)
+	public static void Release (VectorContainer<Vector2> v)
 	{
-		for (int i = 0; i < _v2referenced.Count; i++) {
+		for (int i = 0; i < _poolSize; i++) {
 			if (v == _v2referenced [i]) {
 				_v2referenced.RemoveAt (i);
 				break;
@@ -104,9 +112,9 @@ public static class MVector
 		_v2noreferenced.Add (v);		
 	}
 
-	public static void Release (Vector3 v)
+	public static void Release (VectorContainer<Vector3> v)
 	{
-		for (int i = 0; i < _v3noreferenced.Count; i++) {
+		for (int i = 0; i < _poolSize; i++) {
 			if (v == _v3noreferenced [i]) {
 				_v3noreferenced.RemoveAt (i);
 				break;
@@ -116,9 +124,9 @@ public static class MVector
 
 	}
 
-	public static void Release (Vector4 v)
+	public static void Release (VectorContainer<Vector4> v)
 	{
-		for (int i = 0; i < _v4noreferenced.Count; i++) {
+		for (int i = 0; i < _poolSize; i++) {
 			if (v == _v4noreferenced [i]) {
 				_v4noreferenced.RemoveAt (i);
 				break;
@@ -233,14 +241,14 @@ public static class MVector
 
 	#endregion
 
-	public static List<Vector2> _v2referenced;
-	public static List<Vector2> _v2noreferenced;
+	public static List<VectorContainer<Vector2>> _v2referenced;
+	public static List<VectorContainer<Vector2>> _v2noreferenced;
 
-	public static List<Vector3> _v3referenced;
-	public static List<Vector3> _v3noreferenced;
+	public static List<VectorContainer<Vector3>> _v3referenced;
+	public static List<VectorContainer<Vector3>> _v3noreferenced;
 
-	public static List<Vector4> _v4referenced;
-	public static List<Vector4> _v4noreferenced;
+	public static List<VectorContainer<Vector4>> _v4referenced;
+	public static List<VectorContainer<Vector4>> _v4noreferenced;
 
 	private static int _poolSize = 10;
 }
