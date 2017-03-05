@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class VectorContainer<T> {
    public T Vector;
@@ -11,132 +10,6 @@ public class VectorContainer<T> {
 
 public static class MVector
 {
-
-	#region Inicializacion del pool de vectores
-
-	public static void Init (int poolSize)
-	{
-      _poolSize = poolSize;
-
-		_v2referenced = new List<VectorContainer<Vector2>> (poolSize);
-		_v2noreferenced = new List<VectorContainer<Vector2>> (poolSize);
-
-		_v3referenced = new List<VectorContainer<Vector3>> (poolSize);
-		_v3noreferenced = new List<VectorContainer<Vector3>> (poolSize);
-
-		_v4referenced = new List<VectorContainer<Vector4>> (poolSize);
-		_v4noreferenced = new List<VectorContainer<Vector4>> (poolSize);
-
-		for (int i = 0; i < _poolSize; i++) {
-			_v2noreferenced.Add (new VectorContainer<Vector2>());
-			_v3noreferenced.Add (new VectorContainer<Vector3>());
-			_v4noreferenced.Add (new VectorContainer<Vector4>());
-		}
-			
-	}
-
-	#endregion
-
-	#region Region de obtencion de referencias
-
-	//TODO
-	//Que pasa cuando nos quedamos sin referencias en el pool
-
-	public static void Get (out VectorContainer<Vector2> v)
-	{
-		v = _v2noreferenced [0];
-		_v2referenced.Add (v);
-		_v2noreferenced.RemoveAt (0);
-	}
-
-	public static void Get (out VectorContainer<Vector3> v)
-	{		
-		v = _v3noreferenced [0];
-		_v3referenced.Add (v);
-		_v3noreferenced.RemoveAt (0);
-	}
-
-
-	public static void Get (out VectorContainer<Vector4> v)
-	{
-		v = _v4noreferenced [0];
-		_v4referenced.Add (v);
-		_v4noreferenced.RemoveAt (0);
-	}
-
-
-	public static void Get (out VectorContainer<Vector2> v, float x, float y)
-	{
-		v = _v2noreferenced [0];
-		v.Vector.x = x;
-		v.Vector.y = y;
-		_v2referenced.Add (v);
-		_v2noreferenced.RemoveAt (0);
-	}
-
-
-	public static void Get (out VectorContainer<Vector3> v, float x, float y, float z)
-	{
-		v = _v3noreferenced [0];
-		v.Vector.x = x;
-		v.Vector.y = y;
-		v.Vector.z = z;
-		_v3referenced.Add (v);
-		_v3noreferenced.RemoveAt (0);
-	}
-
-
-	public static void Get (out VectorContainer<Vector4> v, float x, float y, float z, float w)
-	{		
-		v = _v4noreferenced [0];
-		v.Vector.x = x;
-		v.Vector.y = y;
-		v.Vector.z = z;
-		v.Vector.w = w;
-		_v4referenced.Add (v);
-		_v4noreferenced.RemoveAt (0);
-	}
-
-	#endregion
-
-	#region Region de liberacion de referencias
-
-	public static void Release (VectorContainer<Vector2> v)
-	{
-		for (int i = 0; i < _poolSize; i++) {
-			if (v == _v2referenced [i]) {
-				_v2referenced.RemoveAt (i);
-				break;
-			}
-		}
-		_v2noreferenced.Add (v);		
-	}
-
-	public static void Release (VectorContainer<Vector3> v)
-	{
-		for (int i = 0; i < _poolSize; i++) {
-			if (v == _v3noreferenced [i]) {
-				_v3noreferenced.RemoveAt (i);
-				break;
-			}
-		}
-		_v3noreferenced.Add (v);			
-
-	}
-
-	public static void Release (VectorContainer<Vector4> v)
-	{
-		for (int i = 0; i < _poolSize; i++) {
-			if (v == _v4noreferenced [i]) {
-				_v4noreferenced.RemoveAt (i);
-				break;
-			}
-		}
-		_v4noreferenced.Add (v);			
-	}
-
-	#endregion
-
 	#region Asignacion de un valor
 
 	public static void Set (out Vector2 v, float x, float y)
@@ -240,15 +113,4 @@ public static class MVector
 
 
 	#endregion
-
-	public static List<VectorContainer<Vector2>> _v2referenced;
-	public static List<VectorContainer<Vector2>> _v2noreferenced;
-
-	public static List<VectorContainer<Vector3>> _v3referenced;
-	public static List<VectorContainer<Vector3>> _v3noreferenced;
-
-	public static List<VectorContainer<Vector4>> _v4referenced;
-	public static List<VectorContainer<Vector4>> _v4noreferenced;
-
-	private static int _poolSize = 10;
 }
