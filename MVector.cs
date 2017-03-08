@@ -11,6 +11,12 @@ namespace OptimizationUtilities
       v.x = x;
       v.y = y;
     }
+
+    public static void Set (out Vector2 storeVector, ref Vector2 referenceVector)
+    {   
+      storeVector.x = referenceVector.x;
+      storeVector.y = referenceVector.y;
+    }
     
     public static void Set (out Vector3 v, float x, float y, float z)
     {   
@@ -18,13 +24,28 @@ namespace OptimizationUtilities
       v.y = y;
       v.z = z;
     }
-    
+
+    public static void Set (out Vector3 storeVector, ref Vector3 referenceVector)
+    {   
+      storeVector.x = referenceVector.x;
+      storeVector.y = referenceVector.y;
+      storeVector.z = referenceVector.z;
+    }
+
     public static void Set (out Vector4 v, float x, float y, float z, float w)
     {   
       v.x = x;
       v.y = y;
       v.z = z;
       v.w = w;
+    }
+
+    public static void Set (out Vector4 storeVector, ref Vector4 referenceVector)
+    {   
+      storeVector.x = referenceVector.x;
+      storeVector.y = referenceVector.y;
+      storeVector.z = referenceVector.z;
+      storeVector.w = referenceVector.w;
     }
     
     #endregion
@@ -35,6 +56,12 @@ namespace OptimizationUtilities
     {
       v1.x = v1.x + v2.x;
       v1.y = v1.y + v2.y;
+    }
+
+    public static void AddTo (ref Vector2 v1, ref Vector2 v2, ref Vector2 result)
+    {
+      result.x = v1.x + v2.x;
+      result.y = v1.y + v2.y;
     }
     
     public static void AddTo (ref Vector2 v, float x, float y)
@@ -48,6 +75,13 @@ namespace OptimizationUtilities
       v1.x = v1.x + v2.x;
       v1.y = v1.y + v2.y;
       v1.z = v1.z + v2.z;
+    }
+
+    public static void AddTo (ref Vector3 v1, ref Vector3 v2, ref Vector3 result)
+    {
+      result.x = v1.x + v2.x;
+      result.y = v1.y + v2.y;
+      result.z = v1.z + v2.z;
     }
     
     public static void AddTo (ref Vector3 v, float x, float y, float z)
@@ -63,7 +97,14 @@ namespace OptimizationUtilities
       v1.y = v1.y + v2.y;
       v1.z = v1.z + v2.z;
       v1.w = v1.w + v2.w;
-      
+    }
+
+    public static void AddTo (ref Vector4 v1, ref Vector4 v2, ref Vector4 result)
+    {
+      result.x = v1.x + v2.x;
+      result.y = v1.y + v2.y;
+      result.z = v1.z + v2.z;
+      result.w = v1.w + v2.w;
     }
     
     public static void AddTo (ref Vector4 v, float x, float y, float z, float w)
@@ -76,7 +117,75 @@ namespace OptimizationUtilities
     
     
     #endregion
-    
+
+    #region Operaciones basicas de resta
+
+    public static void RemoveFrom (ref Vector2 v1, ref Vector2 v2)
+    {
+      v1.x = v1.x - v2.x;
+      v1.y = v1.y - v2.y;
+    }
+
+    public static void RemoveFrom (ref Vector2 v1, ref Vector2 v2, ref Vector2 result)
+    {
+      result.x = v1.x - v2.x;
+      result.y = v1.y - v2.y;
+    }
+
+    public static void RemoveFrom (ref Vector2 v, float x, float y)
+    {
+      v.x -= x;
+      v.y -= y;
+    }
+
+    public static void RemoveFrom (ref Vector3 v1, ref Vector3 v2)
+    {
+      v1.x = v1.x - v2.x;
+      v1.y = v1.y - v2.y;
+      v1.z = v1.z - v2.z;
+    }
+
+    public static void RemoveFrom (ref Vector3 v1, ref Vector3 v2, ref Vector3 result)
+    {
+      result.x = v1.x - v2.x;
+      result.y = v1.y - v2.y;
+      result.z = v1.z - v2.z;
+    }
+
+    public static void RemoveFrom (ref Vector3 v, float x, float y, float z)
+    {
+      v.x -= x;
+      v.y -= y;
+      v.z -= z;
+    }
+
+    public static void RemoveFrom (ref Vector4 v1, ref Vector4 v2)
+    {
+      v1.x = v1.x - v2.x;
+      v1.y = v1.y - v2.y;
+      v1.z = v1.z - v2.z;
+      v1.w = v1.w - v2.w;
+    }
+
+    public static void RemoveFrom (ref Vector4 v1, ref Vector4 v2, ref Vector4 result)
+    {
+      result.x = v1.x - v2.x;
+      result.y = v1.y - v2.y;
+      result.z = v1.z - v2.z;
+      result.w = v1.w - v2.w;
+    }
+
+    public static void RemoveFrom (ref Vector4 v, float x, float y, float z, float w)
+    {
+      v.x -= x;
+      v.y += y;
+      v.z += z;
+      v.w += w;
+    }
+
+
+    #endregion
+
     #region Operaciones basicas de multiplicacion
     
     public static void ScalarProduct (ref Vector2 v, float s)
