@@ -2,6 +2,10 @@
 
 namespace OptimizationUtilities
 {
+  public enum VectorDimension {
+    X, Y, Z, W
+  }
+
   public static class MVector
   {
     #region Asignacion de un valor
@@ -17,6 +21,18 @@ namespace OptimizationUtilities
       storeVector.x = referenceVector.x;
       storeVector.y = referenceVector.y;
     }
+
+    public static void Set (ref Vector2 storeVector, ref Vector2 referenceVector, VectorDimension dimension)
+    {   
+      switch (dimension) {
+        case VectorDimension.X:
+          storeVector.x = referenceVector.x;
+          break;
+        case VectorDimension.Y:
+          storeVector.y = referenceVector.y;
+          break;
+      }
+    }
     
     public static void Set (out Vector3 v, float x, float y, float z)
     {   
@@ -30,6 +46,28 @@ namespace OptimizationUtilities
       storeVector.x = referenceVector.x;
       storeVector.y = referenceVector.y;
       storeVector.z = referenceVector.z;
+    }
+
+
+    public static void Set (ref Vector3 storeVector, ref Vector3 referenceVector, VectorDimension dimension)
+    {   
+      switch (dimension) {
+        case VectorDimension.X:
+          storeVector.x = referenceVector.x;
+          break;
+        case VectorDimension.Y:
+          storeVector.y = referenceVector.y;
+          break;
+        case VectorDimension.Z:
+          storeVector.z = referenceVector.z;
+          break;
+      }
+    }
+
+    public static void SetPosition (ref Vector3 storeVector, Transform transform) {
+      storeVector.x = transform.position.x;
+      storeVector.y = transform.position.y;
+      storeVector.z = transform.position.z;
     }
 
     public static void Set (out Vector4 v, float x, float y, float z, float w)
@@ -47,7 +85,25 @@ namespace OptimizationUtilities
       storeVector.z = referenceVector.z;
       storeVector.w = referenceVector.w;
     }
-    
+
+    public static void Set (ref Vector4 storeVector, ref Vector4 referenceVector, VectorDimension dimension)
+    {   
+      switch (dimension) {
+        case VectorDimension.X:
+          storeVector.x = referenceVector.x;
+          break;
+        case VectorDimension.Y:
+          storeVector.y = referenceVector.y;
+          break;
+        case VectorDimension.Z:
+          storeVector.z = referenceVector.z;
+        break;
+        case VectorDimension.W:
+          storeVector.w = referenceVector.w;
+          break;
+      }
+    }
+
     #endregion
     
     #region Operaciones basicas de suma
