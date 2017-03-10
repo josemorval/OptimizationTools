@@ -22,6 +22,16 @@ namespace OptimizationUtilities
       storeVector.y = referenceVector.y;
     }
 
+    public static void SetX (ref Vector2 storeVector, ref Vector2 referenceVector)
+    {   
+      storeVector.x = referenceVector.x;
+    }
+
+    public static void SetY (ref Vector2 storeVector, ref Vector2 referenceVector)
+    {   
+      storeVector.y = referenceVector.y;
+    }
+
     public static void Set (ref Vector2 storeVector, ref Vector2 referenceVector, VectorDimension dimension)
     {   
       switch (dimension) {
@@ -48,6 +58,20 @@ namespace OptimizationUtilities
       storeVector.z = referenceVector.z;
     }
 
+    public static void SetX (ref Vector3 storeVector, ref Vector3 referenceVector)
+    {   
+      storeVector.x = referenceVector.x;
+    }
+
+    public static void SetY (ref Vector3 storeVector, ref Vector3 referenceVector)
+    {   
+      storeVector.y = referenceVector.y;
+    }
+
+    public static void SetZ (ref Vector3 storeVector, ref Vector3 referenceVector)
+    {   
+      storeVector.z = referenceVector.z;
+    }
 
     public static void Set (ref Vector3 storeVector, ref Vector3 referenceVector, VectorDimension dimension)
     {   
@@ -83,6 +107,26 @@ namespace OptimizationUtilities
       storeVector.x = referenceVector.x;
       storeVector.y = referenceVector.y;
       storeVector.z = referenceVector.z;
+      storeVector.w = referenceVector.w;
+    }
+
+    public static void SetX (ref Vector4 storeVector, ref Vector4 referenceVector)
+    {   
+      storeVector.x = referenceVector.x;
+    }
+
+    public static void SetY (ref Vector4 storeVector, ref Vector4 referenceVector)
+    {   
+      storeVector.y = referenceVector.y;
+    }
+
+    public static void SetZ (ref Vector4 storeVector, ref Vector4 referenceVector)
+    {   
+      storeVector.z = referenceVector.z;
+    }
+
+    public static void SetW (ref Vector4 storeVector, ref Vector4 referenceVector)
+    {   
       storeVector.w = referenceVector.w;
     }
 
@@ -170,7 +214,6 @@ namespace OptimizationUtilities
       v.z += z;
       v.w += w;
     }
-    
     
     #endregion
 
