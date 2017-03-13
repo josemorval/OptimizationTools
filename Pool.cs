@@ -55,6 +55,12 @@ namespace OptimizationUtilities
       _managedElements.Set(_iterator, true);
     }
 
+    public static void MarkAsTemporalAlloc (T element)
+    {
+      PointIteratorToFreeElement();
+      _managedElements.Set(_iterator, false);
+    }
+
     #endif
     
     public static void Release (T element)
