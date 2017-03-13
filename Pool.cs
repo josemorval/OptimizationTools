@@ -26,6 +26,14 @@ namespace OptimizationUtilities
       return _pool[_iterator];
     }
 
+    public static T GetTemporalIfFunctionEnabled () {
+      #if OU_POOL_AUTOMATIC_RELEASE
+      return Pool<T>.GetTemporal();
+      #else
+      return Pool<T>.Get();
+      #endif
+    }
+
     #if OU_POOL_AUTOMATIC_RELEASE
 
     public static T GetTemporal ()
@@ -35,9 +43,16 @@ namespace OptimizationUtilities
       return _pool[_iterator];
     }
 
-    public static void ReleaseTemporalAllocs () {
+    public static void ReleaseTemporalAllocs () 
+    {
       _usedElements.And(_managedElements);
       _managedElements.SetAll(true);
+    }
+
+    public static void MarkAsNonTemporalAlloc (T element)
+    {
+      PointIteratorToFreeElement();
+      _managedElements.Set(_iterator, true);
     }
 
     #endif
@@ -50,14 +65,19 @@ namespace OptimizationUtilities
     }
 
     private static void PointIteratorToFreeElementAndAllocIt () {
+      PointIteratorToFreeElement();
+      _usedElements.Set(_iterator, true);
+      LogElementsUsedCount();
+    }
+
+    private static void PointIteratorToFreeElement () 
+    {
       _iterator = 0;
       while (_usedElements[_iterator]) 
       { 
         ++_iterator;
         CheckPoolSizeExceeded();
       }
-      _usedElements.Set(_iterator, true);
-      LogElementsUsedCount();
     }
     
     [System.Diagnostics.Conditional("OU_SAFE_MODE")]
@@ -80,9 +100,11 @@ namespace OptimizationUtilities
     }
 
     [System.Diagnostics.Conditional("OU_DEBUG_INFO")]
-    private static void LogElementsUsedCount () {
+    private static void LogElementsUsedCount () 
+    {
       int count = 0;
-      for (int i = 0; i < _pool.Length; ++i) {
+      for (int i = 0; i < _pool.Length; ++i) 
+      {
         if (_usedElements[i]) { ++count; }
       }
       UnityEngine.Debug.Log("Pool " + typeof(T).Name + " used elements: " + count);

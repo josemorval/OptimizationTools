@@ -10,13 +10,13 @@ namespace OptimizationUtilities
   {
     #region Asignacion de un valor
     
-    public static void Set (out Vector2 v, float x, float y)
+    public static void Set (ref Vector2 v, float x, float y)
     {   
       v.x = x;
       v.y = y;
     }
 
-    public static void Set (out Vector2 storeVector, ref Vector2 referenceVector)
+    public static void Set (ref Vector2 storeVector, ref Vector2 referenceVector)
     {   
       storeVector.x = referenceVector.x;
       storeVector.y = referenceVector.y;
@@ -44,14 +44,14 @@ namespace OptimizationUtilities
       }
     }
     
-    public static void Set (out Vector3 v, float x, float y, float z)
+    public static void Set (ref Vector3 v, float x, float y, float z)
     {   
       v.x = x;
       v.y = y;
       v.z = z;
     }
 
-    public static void Set (out Vector3 storeVector, ref Vector3 referenceVector)
+    public static void Set (ref Vector3 storeVector, ref Vector3 referenceVector)
     {   
       storeVector.x = referenceVector.x;
       storeVector.y = referenceVector.y;
@@ -94,7 +94,7 @@ namespace OptimizationUtilities
       storeVector.z = transform.position.z;
     }
 
-    public static void Set (out Vector4 v, float x, float y, float z, float w)
+    public static void Set (ref Vector4 v, float x, float y, float z, float w)
     {   
       v.x = x;
       v.y = y;
@@ -102,7 +102,7 @@ namespace OptimizationUtilities
       v.w = w;
     }
 
-    public static void Set (out Vector4 storeVector, ref Vector4 referenceVector)
+    public static void Set (ref Vector4 storeVector, ref Vector4 referenceVector)
     {   
       storeVector.x = referenceVector.x;
       storeVector.y = referenceVector.y;
