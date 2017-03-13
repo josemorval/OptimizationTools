@@ -292,12 +292,25 @@ namespace OptimizationUtilities
       v.x *= s;
       v.y *= s;
     }
+
+    public static void ScalarProduct (ref Vector2 v, float s, ref Vector2 result)
+    {
+      result.x *= s;
+      result.y *= s;
+    }
     
     public static void ScalarProduct (ref Vector3 v, float s)
     {
       v.x *= s;
       v.y *= s;
       v.z *= s;
+    }
+
+    public static void ScalarProduct (ref Vector3 v, float s, ref Vector3 result)
+    {
+      result.x *= s;
+      result.y *= s;
+      result.z *= s;
     }
     
     public static void ScalarProduct (ref Vector4 v, float s)
@@ -307,12 +320,14 @@ namespace OptimizationUtilities
       v.z *= s;
       v.w *= s;
     }
-    
-    #endregion
-    
-    
-    #region Operaciones basicas de multiplicacion
-    
+
+    public static void ScalarProduct (ref Vector4 v, float s, ref Vector4 result)
+    {
+      result.x *= s;
+      result.y *= s;
+      result.z *= s;
+      result.w *= s;
+    }
     
     #endregion
   }
