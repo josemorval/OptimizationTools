@@ -12,20 +12,35 @@ namespace OptimizationUtilities
         _pool[_iterator] = new T();
       }
       _usedElements = new BitArray(poolSize);
+
+      #if OU_POOL_AUTOMATIC_RELEASE
+
+      _managedElements = new BitArray(poolSize, true);
+
+      #endif
     }
     
     public static T Get ()
     {
-      _iterator = 0;
-      while (_usedElements[_iterator]) 
-      { 
-        ++_iterator;
-        checkPoolSizeExceeded();
-      }
-      _usedElements.Set(_iterator, true);
-      logElementsUsedCount();
+      PointIteratorToFreeElementAndAllocIt();
       return _pool[_iterator];
     }
+
+    #if OU_POOL_AUTOMATIC_RELEASE
+
+    public static T GetTemporal ()
+    {
+      PointIteratorToFreeElementAndAllocIt();
+      _managedElements.Set(_iterator, false);
+      return _pool[_iterator];
+    }
+
+    public static void ReleaseTemporalAllocs () {
+      _usedElements.And(_managedElements);
+      _managedElements.SetAll(true);
+    }
+
+    #endif
     
     public static void Release (T element)
     {
@@ -34,8 +49,19 @@ namespace OptimizationUtilities
       _usedElements.Set(_iterator, false);
     }
 
+    private static void PointIteratorToFreeElementAndAllocIt () {
+      _iterator = 0;
+      while (_usedElements[_iterator]) 
+      { 
+        ++_iterator;
+        CheckPoolSizeExceeded();
+      }
+      _usedElements.Set(_iterator, true);
+      LogElementsUsedCount();
+    }
+    
     [System.Diagnostics.Conditional("OU_SAFE_MODE")]
-    private static void checkPoolSizeExceeded () {
+    private static void CheckPoolSizeExceeded () {
       if (_iterator == _pool.Length) {
 
         T[] newPool = new T[_pool.Length + 1];
@@ -46,11 +72,15 @@ namespace OptimizationUtilities
         BitArray newUsedElements = new BitArray(_pool.Length + 1);
         newUsedElements.Or(_usedElements);
         _usedElements = newUsedElements;
+
+        BitArray newTemporalAllocations = new BitArray(_pool.Length + 1);
+        newUsedElements.Or(_usedElements);
+        _usedElements = newUsedElements;
       }
     }
 
     [System.Diagnostics.Conditional("OU_DEBUG_INFO")]
-    private static void logElementsUsedCount () {
+    private static void LogElementsUsedCount () {
       int count = 0;
       for (int i = 0; i < _pool.Length; ++i) {
         if (_usedElements[i]) { ++count; }
@@ -61,5 +91,11 @@ namespace OptimizationUtilities
     private static int _iterator;
     private static T[] _pool;
     private static BitArray _usedElements;
+
+    #if OU_POOL_AUTOMATIC_RELEASE
+
+    private static BitArray _managedElements;
+
+    #endif
   }
 }
