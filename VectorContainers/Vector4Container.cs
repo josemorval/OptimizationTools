@@ -32,6 +32,30 @@ namespace OptimizationUtilities
       }
     }
 
+    public float Z
+    {
+      get
+      {
+        return Vector.z;
+      }
+      set
+      {
+        Vector.z = value;
+      }
+    }
+
+    public float W
+    {
+      get
+      {
+        return Vector.w;
+      }
+      set
+      {
+        Vector.w = value;
+      }
+    }
+
     #endregion
 
     #region Assignement Methods
