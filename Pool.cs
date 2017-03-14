@@ -95,13 +95,14 @@ namespace OptimizationUtilities
         newPool [newPool.Length - 1] = new T();
         _pool = newPool;
 
-        BitArray newUsedElements = new BitArray(_pool.Length + 1);
-        newUsedElements.Or(_usedElements);
-        _usedElements = newUsedElements;
+        _usedElements.Length += 1;
 
-        BitArray newTemporalAllocations = new BitArray(_pool.Length + 1);
-        newUsedElements.Or(_usedElements);
-        _usedElements = newUsedElements;
+        #if OU_POOL_AUTOMATIC_RELEASE
+
+        _managedElements.Length += 1;
+        _managedElements.Set(_managedElements.Length - 1, true);
+
+        #endif
       }
     }
 

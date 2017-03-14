@@ -88,7 +88,8 @@ namespace OptimizationUtilities
       }
     }
 
-    public static void SetPosition (ref Vector3 storeVector, Transform transform) {
+    public static void SetPosition (ref Vector3 storeVector, Transform transform) 
+    {
       storeVector.x = transform.position.x;
       storeVector.y = transform.position.y;
       storeVector.z = transform.position.z;
