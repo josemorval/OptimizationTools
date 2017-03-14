@@ -30,7 +30,8 @@ namespace OptimizationUtilities {
       #endif
     }
 
-    [System.Diagnostics.Conditional("OU_POOL_AUTOMATIC_RELEASE")]
+    #if OU_POOL_AUTOMATIC_RELEASE
+
     void Update () {
       if (vector2PoolSize > 0) {
         Pool<Vector2>.ReleaseTemporalAllocs();
@@ -43,7 +44,11 @@ namespace OptimizationUtilities {
       }
     }
 
-    [UnityEditor.Callbacks.DidReloadScripts, System.Diagnostics.Conditional("UNITY_EDITOR")]
+    #endif
+
+    #if UNITY_EDITOR && OU_POOL_AUTOMATIC_RELEASE
+
+    [UnityEditor.Callbacks.DidReloadScripts]
     private static void SetExecutionOrder () {
       GameObject go = new GameObject("GO_VectorPool", new System.Type[]{typeof(VectorPoolsManager)});
       UnityEditor.MonoScript monoScript = UnityEditor.MonoScript.FromMonoBehaviour(go.GetComponent<VectorPoolsManager>());
@@ -52,5 +57,7 @@ namespace OptimizationUtilities {
       }
       GameObject.DestroyImmediate(go);
     }
+
+    #endif
   }
 }
