@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace OptimizationUtilities 
+namespace OptimizationTools 
 {
   public static class Pool<T> where T : new()
   {
@@ -13,7 +13,7 @@ namespace OptimizationUtilities
       }
       _usedElements = new BitArray(poolSize);
 
-      #if OU_POOL_AUTOMATIC_RELEASE
+      #if OT_POOL_AUTOMATIC_RELEASE
 
       _managedElements = new BitArray(poolSize, true);
 
@@ -27,14 +27,14 @@ namespace OptimizationUtilities
     }
 
     public static T GetTemporalIfFunctionEnabled () {
-      #if OU_POOL_AUTOMATIC_RELEASE
+      #if OT_POOL_AUTOMATIC_RELEASE
       return Pool<T>.GetTemporal();
       #else
       return Pool<T>.Get();
       #endif
     }
 
-    #if OU_POOL_AUTOMATIC_RELEASE
+    #if OT_POOL_AUTOMATIC_RELEASE
 
     public static T GetTemporal ()
     {
@@ -86,7 +86,7 @@ namespace OptimizationUtilities
       }
     }
     
-    [System.Diagnostics.Conditional("OU_SAFE_MODE")]
+    [System.Diagnostics.Conditional(Constants.Modes.Safe)]
     private static void CheckPoolSizeExceeded () {
       if (_iterator == _pool.Length) {
 
@@ -97,7 +97,7 @@ namespace OptimizationUtilities
 
         _usedElements.Length += 1;
 
-        #if OU_POOL_AUTOMATIC_RELEASE
+        #if OT_POOL_AUTOMATIC_RELEASE
 
         _managedElements.Length += 1;
         _managedElements.Set(_managedElements.Length - 1, true);
@@ -106,7 +106,7 @@ namespace OptimizationUtilities
       }
     }
 
-    [System.Diagnostics.Conditional("OU_DEBUG_INFO")]
+    [System.Diagnostics.Conditional(Constants.Modes.Debug)]
     private static void LogElementsUsedCount () 
     {
       int count = 0;
@@ -121,7 +121,7 @@ namespace OptimizationUtilities
     private static T[] _pool;
     private static BitArray _usedElements;
 
-    #if OU_POOL_AUTOMATIC_RELEASE
+    #if OT_POOL_AUTOMATIC_RELEASE
 
     private static BitArray _managedElements;
 

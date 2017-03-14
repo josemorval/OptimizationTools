@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace OptimizationUtilities {
+namespace OptimizationTools {
   public class VectorPoolsManager : MonoBehaviour {
 
     [SerializeField]
@@ -23,14 +23,14 @@ namespace OptimizationUtilities {
         Pool<Vector4Container>.Init(vector4PoolSize);
       }
 
-      #if OU_POOL_AUTOMATIC_RELEASE
+      #if OT_POOL_AUTOMATIC_RELEASE
       DontDestroyOnLoad(gameObject);
       #else
       GameObject.Destroy(gameObject);
       #endif
     }
 
-    #if OU_POOL_AUTOMATIC_RELEASE
+    #if OT_POOL_AUTOMATIC_RELEASE
 
     void Update () {
       if (vector2PoolSize > 0) {
@@ -46,7 +46,7 @@ namespace OptimizationUtilities {
 
     #endif
 
-    #if UNITY_EDITOR && OU_POOL_AUTOMATIC_RELEASE
+    #if UNITY_EDITOR && OT_POOL_AUTOMATIC_RELEASE
 
     [UnityEditor.Callbacks.DidReloadScripts]
     private static void SetExecutionOrder () {

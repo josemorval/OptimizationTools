@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using OptimizationUtilities;
+using OptimizationTools;
 
-namespace OptimizationUtilities.Tests
+namespace OptimizationTools.Tests
 {
   public class PoolTest 
   {
@@ -18,7 +18,7 @@ namespace OptimizationUtilities.Tests
       Assert.NotNull(v);
     }
     
-    [Test, IgnoreWhenIsDefinedAttribute("OU_SAFE_MODE")]
+    [Test, IgnoreWhenIsDefinedAttribute(Constants.Modes.Safe)]
     public void GetReferenceWhenExceedCapacityThrowsExceptionIfSafeModeIsNotActiveTest ()
     {
       Vector2Container v = Pool<Vector2Container>.Get();
@@ -27,7 +27,7 @@ namespace OptimizationUtilities.Tests
       });
     }
 
-    [Test, IgnoreWhenIsNotDefinedAttribute("OU_SAFE_MODE")]
+    [Test, IgnoreWhenIsNotDefinedAttribute(Constants.Modes.Safe)]
     public void GetReferenceWhenExceedCapacityIncreasePoolSizeInsteadThrowingExceptionTest ()
     {
       Vector2Container v = Pool<Vector2Container>.Get();

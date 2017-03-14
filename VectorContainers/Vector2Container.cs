@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace OptimizationUtilities
+namespace OptimizationTools
 {
   public class Vector2Container 
   {

@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using NUnit.Framework;
 
-namespace OptimizationUtilities.Tests
+namespace OptimizationTools.Tests
 {
   public class IgnoreWhenIsDefinedAttribute : System.Attribute, ITestAction
   {

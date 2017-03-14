@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace OptimizationUtilities
+namespace OptimizationTools
 {
   public enum VectorDimension {
     X, Y, Z, W
