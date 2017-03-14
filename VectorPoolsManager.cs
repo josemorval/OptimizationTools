@@ -34,13 +34,13 @@ namespace OptimizationUtilities {
 
     void Update () {
       if (vector2PoolSize > 0) {
-        Pool<Vector2>.ReleaseTemporalAllocs();
+        Pool<Vector2Container>.ReleaseTemporalAllocs();
       }
       if (vector3PoolSize > 0) {
-        Pool<Vector3>.ReleaseTemporalAllocs();
+        Pool<Vector3Container>.ReleaseTemporalAllocs();
       }
       if (vector4PoolSize > 0) {
-        Pool<Vector4>.ReleaseTemporalAllocs();
+        Pool<Vector4Container>.ReleaseTemporalAllocs();
       }
     }
 
