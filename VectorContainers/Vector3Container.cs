@@ -46,6 +46,11 @@ namespace OptimizationUtilities
       Set(ref v.Vector);
     }
 
+    public void Set (float x, float y, float z)
+    {
+      MVector.Set(ref Vector, x, y, z);
+    }
+
     #endregion
 
     #region Add Methods
