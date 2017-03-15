@@ -46,6 +46,7 @@ namespace OptimizationTools
     public static void ReleaseTemporalAllocs () 
     {
       _usedElements.And(_managedElements);
+      LogElementReleasedFromPool();
       _managedElements.SetAll(true);
     }
 
@@ -67,13 +68,14 @@ namespace OptimizationTools
     {
       _iterator = 0;
       while (!_pool[_iterator].Equals(element)) { ++_iterator; }
+      LogElementReleasedFromPool();
       _usedElements.Set(_iterator, false);
     }
 
     private static void PointIteratorToFreeElementAndAllocIt () {
       PointIteratorToFreeElement();
       _usedElements.Set(_iterator, true);
-      LogElementsUsedCount();
+      LogElementAllocFromPool();
     }
 
     private static void PointIteratorToFreeElement () 
@@ -103,20 +105,42 @@ namespace OptimizationTools
         _managedElements.Set(_managedElements.Length - 1, true);
 
         #endif
+
+        LogPoolResized();
       }
     }
 
     [System.Diagnostics.Conditional(Constants.Modes.Debug)]
-    private static void LogElementsUsedCount () 
+    private static void LogElementAllocFromPool () 
     {
-      int count = 0;
-      for (int i = 0; i < _pool.Length; ++i) 
-      {
-        if (_usedElements[i]) { ++count; }
-      }
-      UnityEngine.Debug.Log("Pool " + typeof(T).Name + " used elements: " + count);
+      UnityEngine.Debug.Log("Pool " + typeof(T).Name + " Alloc. Used elements = " + UsedElementsCount);
     }
-    
+
+    [System.Diagnostics.Conditional(Constants.Modes.Debug)]
+    private static void LogElementReleasedFromPool () 
+    {
+      UnityEngine.Debug.Log("Pool " + typeof(T).Name + " Release. Used elements = " + UsedElementsCount);
+    }
+
+    [System.Diagnostics.Conditional(Constants.Modes.Debug)]
+    private static void LogPoolResized () 
+    {
+      UnityEngine.Debug.Log("Pool " + typeof(T).Name + " Resized");
+    }
+
+    private static int UsedElementsCount
+    {
+      get
+      {
+        int count = 0;
+        for (int i = 0; i < _pool.Length; ++i) 
+        {
+          if (_usedElements[i]) { ++count; }
+        }
+        return count;
+      }
+    }
+
     private static int _iterator;
     private static T[] _pool;
     private static BitArray _usedElements;
