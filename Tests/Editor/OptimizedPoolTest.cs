@@ -2,24 +2,24 @@
 using OptimizationTools.Pools;
 
 namespace OptimizationTools.Tests {
-  public class PoolTest {
+  public class OptimizedPoolTest {
     [SetUp]
     public void Init () {
-      Pool<Vector2Container>.Init (1);
+      OptimizedPool<Vector2Container>.Init (1);
     }
 
     [Test]
     public void GetReferenceTest () {
-      Vector2Container v = Pool<Vector2Container>.Get ();
+      Vector2Container v = OptimizedPool<Vector2Container>.Get ();
       Assert.NotNull (v);
     }
 
     [Test]
     public void GetReferenceWhenExceedCapacityThrowsExceptionIfSafeModeIsNotActiveTest () {
 #if !OT_SAFE_MODE
-      Pool<Vector2Container>.Get ();
+      OptimizedPool<Vector2Container>.Get ();
       Assert.Throws<System.ArgumentOutOfRangeException> (delegate {
-        Pool<Vector2Container>.Get ();
+        OptimizedPool<Vector2Container>.Get ();
       });
 #else
       Assert.Ignore ("Test ignored on Safe Mode");
@@ -29,9 +29,9 @@ namespace OptimizationTools.Tests {
     [Test]
     public void GetReferenceWhenExceedCapacityIncreasePoolSizeInsteadThrowingExceptionTest () {
 #if OT_SAFE_MODE
-      Pool<Vector2Container>.Get ();
+      OptimizedPool<Vector2Container>.Get ();
       Assert.DoesNotThrow (delegate {
-        Pool<Vector2Container>.Get ();
+        OptimizedPool<Vector2Container>.Get ();
       });
 #else
       Assert.Ignore ("Test ignored when Safe Mode is disabled");
@@ -40,10 +40,10 @@ namespace OptimizationTools.Tests {
 
     [Test]
     public void ReleaseReferenceTest () {
-      Vector2Container v = Pool<Vector2Container>.Get ();
-      Pool<Vector2Container>.Release (v);
+      Vector2Container v = OptimizedPool<Vector2Container>.Get ();
+      OptimizedPool<Vector2Container>.Release (v);
       Assert.DoesNotThrow (delegate {
-        Pool<Vector2Container>.Get ();
+        OptimizedPool<Vector2Container>.Get ();
       });
     }
   }
